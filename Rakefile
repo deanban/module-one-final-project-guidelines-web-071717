@@ -47,3 +47,19 @@ task :import_actors do
   end
 
 end
+
+desc "Import title, year, and rating from IMDB from csv file"
+task :import_film do
+
+  file = "db/movie_data.csv"
+
+  CSV.foreach(file, :headers => true) do |row|
+  	Film.create!({
+  		title: row[5],
+  		year: row[12],
+  		rating: row[13]
+  		})
+    puts "row added"
+  end
+
+end
