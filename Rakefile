@@ -72,6 +72,12 @@ task :import_film do
     film.actors << actor2
     film.actors << actor3
 
+    genres = row[3].split("|")
+    genres.each do |genre| 
+      set_genre = Genre.find_or_create_by({name: genre})
+      film.genres << set_genre
+    end
+
     film.save
     puts "row added"
   end
