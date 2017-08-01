@@ -10,33 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170731215443) do
+ActiveRecord::Schema.define(version: 20170801141201) do
 
   create_table "actors", force: :cascade do |t|
     t.string "name"
+  end
+
+  create_table "film_actors", force: :cascade do |t|
+    t.integer "film_id"
+    t.integer "actor_id"
   end
 
   create_table "films", force: :cascade do |t|
     t.string  "title"
     t.integer "year"
     t.float   "rating"
-  end
-
-  create_table "movies", force: :cascade do |t|
-    t.string  "director_name"
-    t.integer "duration"
-    t.string  "actor_1"
-    t.string  "genres"
-    t.string  "actor_2"
-    t.string  "movie_title"
-    t.integer "num_of_voted_users"
-    t.string  "actor_3"
-    t.string  "imdb_link"
-    t.integer "num_of_reviews"
-    t.string  "language"
-    t.string  "country"
-    t.integer "year"
-    t.decimal "imdb_score"
   end
 
 end

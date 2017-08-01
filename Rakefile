@@ -3,8 +3,11 @@ require 'sinatra/activerecord/rake'
 
 require 'csv'
 
+
+
 desc 'starts a console'
 task :console do
+  ActiveRecord::Base.logger = Logger.new(STDOUT) #from alex
   Pry.start
 end
 
@@ -23,7 +26,8 @@ task :import do
       movie_title: row[5],
     	num_of_voted_users: row[6],
     	actor_3: row[7],
-    	imdb_link: row[8],      	num_of_reviews: row[9],
+    	imdb_link: row[8],      	
+      num_of_reviews: row[9],
       language: row[10],
     	country: row[11],
     	year: row[12],
@@ -40,6 +44,7 @@ task :import_actors do
   file = "db/movie_data.csv"
 
   CSV.foreach(file, :headers => true) do |row|
+
   	Actor.create!({name: row[2]}) unless Actor.find_by(name: row[2])
     Actor.create!({name: row[4]}) unless Actor.find_by(name: row[4])
     Actor.create!({name: row[7]}) unless Actor.find_by(name: row[7])
@@ -54,12 +59,41 @@ task :import_film do
   file = "db/movie_data.csv"
 
   CSV.foreach(file, :headers => true) do |row|
-  	Film.create!({
-  		title: row[5],
+  	film = Film.create!({
+  		title: row[5].squish,
   		year: row[12],
   		rating: row[13]
   		})
+    actor1 = Actor.find_or_create_by({name: row[2]})
+    actor2 = Actor.find_or_create_by({name: row[4]})
+    actor3 = Actor.find_or_create_by({name: row[7]})
+    # binding.pry
+    film.actors << actor1
+    film.actors << actor2
+    film.actors << actor3
+
+    film.save
     puts "row added"
   end
 
 end
+#07/30/2017
+
+
+
+desc "Import filmID & actorID from film and actor table"
+task :import_film_actor do
+
+  file = "db/movie_data.csv"
+
+  CSV.foreach(file, :headers => true) do |row|
+    Film_actor.create!({
+      title: row[5],
+      year: row[12],
+      rating: row[13]
+      })
+    puts "row added"
+  end
+
+end
+
