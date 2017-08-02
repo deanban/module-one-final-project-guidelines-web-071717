@@ -7,6 +7,9 @@ class MovieSearcher
 	attr_accessor :film, :actor, :genre, :rating, :year1, :year2
 
 	def welcome
+		puts "WAS IMDB DOWN?"
+		puts "We've got you covered."
+		puts "Not affiliated with the Real IMDB"
 		puts "What are you interested in?"
 		#puts "If you are interested in 10,000 B.C, get a life!"
 	end
@@ -16,11 +19,19 @@ class MovieSearcher
 		input = gets.chomp
 
 		if input.casecmp('films') == 0
-			puts "What film do you want to know about?"
-			films_info
+			#puts "What film do you want to know about?"
+			film_info
 		elsif input.casecmp('actors') == 0
 			puts "Any specific actor you want to know about?"
 			actor_info
+			puts "Are you interested in any of #{@actor.name}'s movies?"
+			puts "Y/N?"
+			sub_input = gets.chomp
+			if sub_input.casecmp('Y') == 0
+				film_info 
+			elsif sub_input.casecmp('N') == 0
+				runner
+			end
 		elsif input.casecmp('genre') == 0
 			puts "Got any genre in mind?"
 			genre_info

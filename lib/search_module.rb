@@ -15,7 +15,17 @@ module SearchFunctions
 		puts film_template(list)
 	end
 
-	def films_info
+	def films_by_min_rating
+		@rating = gets.chomp
+		@rating = @rating.to_f
+		list = Film.where("rating > #{@rating}")
+		puts "All these movies have at least a rating of #{@rating}."
+		puts film_template(list)
+
+	end
+
+	def film_info
+		puts "What film do you want to know about?"
 		input = gets.chomp
 		@film = Film.find_by("lower(title) = ?", input.downcase)
 		puts "#{@film.title} was released in #{@film.year}."
@@ -26,7 +36,15 @@ module SearchFunctions
 
 	def actor_info
 		input = gets.chomp
-		@actor = Actor.find_by("lower(name) = ?", input.downcase)
+		if Actor.find_by("lower(name) = ?", input.downcase)		
+			@actor = Actor.find_by("lower(name) = ?", input.downcase)
+		elsif Actor.find_by("lower(name) = ?", input.downcase) == nil
+			puts "We couldn't find anyone with that name."
+			puts "Try again?"
+			actor_info
+		# else 
+		# 	break if input == 'exit'	
+		end
 		puts "#{@actor.name} starred in::\n#{film_template(@actor.films)}"
 	end
 
@@ -42,21 +60,19 @@ module SearchFunctions
 			film.title
 		end
 		#fixe these up, sometimes there are less than 3 films
-		if film_parser.count > 3
-			film_parser[-1] = "and " + film_parser[-1]
-			film_parser.join(", \n")
-		elsif film_parser.count == 2
-			film_parser = "#{film_parser[0]} and #{film_parser[1]}."
-		elsif film_parser.count == 1
-			film_parser.join
-		end
+		template_helper(film_parser)
 	end
 
-	# def rating_info
-	# # 	input = gets.chomp
-	# # 	@rating = Film.find_by('rating = ')
-	# # 	puts "There are #{@genre.films.count} films categorized as #{@genre.name} in our Database."
-	# # end
+	def template_helper(listing)
+		if listing.count > 3
+			listing[-1] = "and " + listing[-1]
+			listing.join(", \n")
+		elsif listing.count == 2
+			listing = "#{listing[0]} and #{listing[1]}."
+		elsif listing.count == 1
+			listing.join
+		end
+	end
 
 	def actor_template(arg)
 		actor_parser = arg.actors.map do |actor|
@@ -78,26 +94,5 @@ module SearchFunctions
 	end
 
 
-
-	def films_by_min_rating
-		@rating = gets.chomp
-		@rating = @rating.to_f
-		list = Film.where("rating > #{@rating}")
-		puts "All these movies have at least a rating of #{@rating}."
-		puts film_template(list)
-
-	end
-
-	def films_by_actor
-		input = gets.chomp
-		#puts "****#{Actor.find_by(name: input)}*****"
-
-	end
-
-	def films_by_genre
-		input = gets.chomp
-		#puts "****#{Genre.find_by(title: input)}*****"
-
-	end
 
 end

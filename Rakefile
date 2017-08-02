@@ -20,7 +20,7 @@ task :import do
   	Movie.create!({
   		director_name: row[0],
   		duration: row[1],
-  		actor_1: row[2],
+  		actor_1: row[2ex],
     	genres: row[3],
       actor_2: row[4],
       movie_title: row[5],
@@ -87,19 +87,19 @@ end
 
 
 
-desc "Import filmID & actorID from film and actor table"
-task :import_film_actor do
+# desc "Import filmID & actorID from film and actor table"
+# task :import_film_actor do
 
-  file = "db/movie_data.csv"
+#   file = "db/movie_data.csv"
 
-  CSV.foreach(file, :headers => true) do |row|
-    Film_actor.create!({
-      title: row[5],
-      year: row[12],
-      rating: row[13]
-      })
-    puts "row added"
-  end
+#   CSV.foreach(file, :headers => true) do |row|
+#     Film_actor.create!({
+#       title: row[5],
+#       year: row[12],
+#       rating: row[13]
+#       })
+#     puts "row added"
+#   end
 
 end
 
