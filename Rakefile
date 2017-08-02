@@ -7,7 +7,7 @@ require 'csv'
 
 desc 'starts a console'
 task :console do
-  #ActiveRecord::Base.logger = Logger.new(STDOUT) #from alex
+  ActiveRecord::Base.logger = Logger.new(STDOUT) #from alex
   Pry.start
 end
 

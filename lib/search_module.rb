@@ -17,22 +17,24 @@ module SearchFunctions
 
 	def films_info
 		input = gets.chomp
-		@film = Film.find_by(title: input)
+		@film = Film.find_by("lower(title) = ?", input.downcase)
 		puts "#{@film.title} was released in #{@film.year}."
-		puts "#{actor_template(@film)} acted in it."
+		puts "Cast includes: #{actor_template(@film)}."
 		puts "#{@film.title} is categorized as #{genre_template(@film)}"
+		puts "#{@film.title} has a IMDB rating of #{@film.rating}."
 	end
 
 	def actor_info
 		input = gets.chomp
-		@actor = Actor.find_by(name: input)
-		puts "#{@actor.name} starred in #{film_template(@actor.films)}"
+		@actor = Actor.find_by("lower(name) = ?", input.downcase)
+		puts "#{@actor.name} starred in::\n#{film_template(@actor.films)}"
 	end
 
 	def genre_info
 		input = gets.chomp
-		@genre = Genre.find_by(name: input)
+		@genre = Genre.find_by("lower(name) = ?",  input.downcase)
 		puts "There are #{@genre.films.count} films categorized as #{@genre.name} in our Database."
+
 	end
 
 	def film_template(arg)
@@ -77,9 +79,12 @@ module SearchFunctions
 
 
 
-	def films_by_rating
-		input = gets.chomp
-		puts "****#{Film.find_by(title: input).rating}*****"
+	def films_by_min_rating
+		@rating = gets.chomp
+		@rating = @rating.to_f
+		list = Film.where("rating > #{@rating}")
+		puts "All these movies have at least a rating of #{@rating}."
+		puts film_template(list)
 
 	end
 
@@ -94,4 +99,5 @@ module SearchFunctions
 		#puts "****#{Genre.find_by(title: input)}*****"
 
 	end
+
 end

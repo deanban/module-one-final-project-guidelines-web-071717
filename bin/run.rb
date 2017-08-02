@@ -8,11 +8,11 @@ class MovieSearcher
 
 	def welcome
 		puts "What are you interested in?"
-		#puts "If you are interested in 10,000 B.C. Go F yourself!"
-		puts "You can type: Films, Actors, Year, Genre, or Ratings"
+		#puts "If you are interested in 10,000 B.C, get a life!"
 	end
 
-	def input_checker()
+	def input_checker
+		puts "You can type: Films, Actors, Year, Genre, or Ratings"
 		input = gets.chomp
 
 		if input.casecmp('films') == 0
@@ -27,17 +27,22 @@ class MovieSearcher
 		elsif input.casecmp('year') == 0
 			puts "Do you want to checkout a range of years, or a specific one?"
 			preference = gets.chomp
-			if preference == 'Range'
+			if preference.casecmp("Range") == 0
 				puts "Put in the starting year"
 				@year1 = gets.chomp
 				puts "Put in the ending year"
 				@year2 = gets.chomp
 				films_by_year_range
-			elsif preference == 'Specific'
+			elsif preference.casecmp("Specific") == 0
 				films_by_year
 			end
+		elsif input.casecmp('ratings') == 0
+			puts "What's your lowest expectation?"
+			films_by_min_rating
+
 		elsif input.casecmp('exit') == 0
-			gtfo
+			gtfo 
+			return 'exit'
 		else
 			puts "Pick an actual option!"
 			input_checker
@@ -47,11 +52,14 @@ class MovieSearcher
 
 	def runner
 		welcome
-		input_checker
+		while true
+			input_checker
+			break if input_checker == 'exit'
+		end
 	end
 
 	def gtfo
-		puts "GTFO"
+		puts "\nGTFO"
 	end
 end
 
