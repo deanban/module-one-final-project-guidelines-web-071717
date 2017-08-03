@@ -53,6 +53,20 @@ task :import_actors do
 
 end
 
+# desc "Import only directors from IMDB from csv file"
+# task :import_directors do
+
+#   file = "db/movie_data.csv"
+
+#   CSV.foreach(file, :headers => true) do |row|
+
+#     Director.create!({name: row[0]})
+#     puts "row added"
+#   end
+
+# end
+
+
 desc "Import title, year, and rating from IMDB from csv file"
 task :import_film do
 
