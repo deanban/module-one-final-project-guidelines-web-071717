@@ -66,7 +66,6 @@ class MovieSearcher
 
 		elsif input.casecmp('exit') == 0
 			gtfo
-			'exit'
 		else
 			puts "Pick an actual option!"
 			input_checker
@@ -83,6 +82,7 @@ class MovieSearcher
 
 	def gtfo
 		puts "\nGTFO"
+		exit
 	end
 end
 
