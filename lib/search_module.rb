@@ -3,35 +3,67 @@ module SearchFunctions
 		puts "Pick a year"
 		@year1 = gets.chomp
 		list = Film.where(year: @year1)
+		puts "*********************************************"
+
 		puts "These movies were released in the year #{@year1}:"
 		puts film_template(list)
+		puts "*********************************************"
+
 
 	end
 
 	def films_by_year_range
 		#range = "#{@year1}...#{@year2}"
 		list = Film.where(year: @year1...@year2)
+		puts "*********************************************"
+
 		puts "From #{@year1} to #{@year2} these movies were released:"
 		puts film_template(list)
+		puts "*********************************************"
+
 	end
 
 	def films_by_min_rating
 		@rating = gets.chomp
 		@rating = @rating.to_f
-		list = Film.where("rating > #{@rating}")
-		puts "All these movies have at least a rating of #{@rating}."
-		puts film_template(list)
+		puts "Do you have a year in mind? y/n"
+		rating_year_pref = gets.chomp
+		if rating_year_pref.casecmp('y') == 0
+			puts "Enter year"
+			@rating_year = gets.chomp
+			puts "These movies have a minimum rating of #{@rating} in the year #{@rating_year}."
+			list = Film.where("rating > #{@rating}" and "year =  #{@rating_year}")
+			film_template(list)
+		elsif rating_year_pref.casecmp('n') == 0
+				
+			list = Film.where("rating > #{@rating}")
+			puts "*********************************************"
+
+			puts "All these movies have at least a rating of #{@rating}."
+			puts film_template(list)
+			puts "*********************************************"
+		end
+
 
 	end
+
+	# def films_by_rating_and_year
+	# 	list = Film.where("rating > #{@rating}" AND year: )
 
 	def film_info
 		puts "What film do you want to know about?"
 		input = gets.chomp
 		@film = Film.find_by("lower(title) = ?", input.downcase)
+		puts "*********************************************"
 		puts "#{@film.title} was released in #{@film.year}."
+		puts "*********************************************"
 		puts "Cast includes: #{actor_template(@film)}."
+		puts "*********************************************"
 		puts "#{@film.title} is categorized as #{genre_template(@film)}"
+		puts "*********************************************"
 		puts "#{@film.title} has a IMDB rating of #{@film.rating}."
+		puts "*********************************************"
+
 	end
 
 	def actor_info
@@ -45,6 +77,7 @@ module SearchFunctions
 		# else 
 		# 	break if input == 'exit'	
 		end
+		puts "*********************************************"
 		puts "#{@actor.name} starred in::\n#{film_template(@actor.films)}"
 	end
 

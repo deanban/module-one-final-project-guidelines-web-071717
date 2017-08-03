@@ -4,7 +4,7 @@ ActiveRecord::Base.logger = nil
 class MovieSearcher
 	include SearchFunctions
 
-	attr_accessor :film, :actor, :genre, :rating, :year1, :year2
+	attr_accessor :film, :actor, :genre, :rating, :year1, :year2, :rating_year
 
 	def welcome
 		puts "WAS IMDB DOWN?"
@@ -22,15 +22,18 @@ class MovieSearcher
 			#puts "What film do you want to know about?"
 			film_info
 		elsif input.casecmp('actors') == 0
+			puts "*********************************************"
 			puts "Any specific actor you want to know about?"
 			actor_info
 			puts "Are you interested in any of #{@actor.name}'s movies?"
 			puts "Y/N?"
 			sub_input = gets.chomp
+			puts "*********************************************"
+
 			if sub_input.casecmp('Y') == 0
 				film_info 
 			elsif sub_input.casecmp('N') == 0
-				runner
+				
 			end
 		elsif input.casecmp('genre') == 0
 			puts "Got any genre in mind?"
@@ -50,6 +53,7 @@ class MovieSearcher
 		elsif input.casecmp('ratings') == 0
 			puts "What's your lowest expectation?"
 			films_by_min_rating
+				#puts "Movies with a minimum rating of #{}"
 
 		elsif input.casecmp('exit') == 0
 			gtfo 
