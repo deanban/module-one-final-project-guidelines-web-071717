@@ -40,13 +40,13 @@ module SearchFunctions
 				puts "#{film_count} movies have a minimum IMDB rating of #{@rating} in the year #{@rating_year}."
 				puts "*********************************************"
 				list1 = Film.where("year = #{@rating_year} and rating > #{@rating}")
-				film_template(list1)
+				puts film_template(list1)
 				puts "*********************************************"
 			end
 
 
 		elsif rating_year_pref.casecmp('n') == 0
-				
+
 			list = Film.where("rating > #{@rating}")
 			puts "*********************************************"
 
@@ -68,9 +68,9 @@ module SearchFunctions
 		puts "*********************************************"
 		puts "#{@film.title} was released in #{@film.year}."
 		puts "*********************************************"
-		puts "Cast includes: #{actor_template(@film)}."
+		puts "Cast includes: \n#{actor_template(@film)}."
 		puts "*********************************************"
-		puts "#{@film.title} is categorized as #{genre_template(@film)}"
+		puts "#{@film.title} is categorized as \n#{genre_template(@film)}"
 		puts "*********************************************"
 		puts "#{@film.title} has a IMDB rating of #{@film.rating}."
 		puts "*********************************************"
@@ -78,18 +78,22 @@ module SearchFunctions
 	end
 
 	def actor_info
+		puts "*********************************************"
+		puts "Any specific actor you want to know about?"
 		input = gets.chomp
-		if Actor.find_by("lower(name) = ?", input.downcase)		
+		if Actor.find_by("lower(name) = ?", input.downcase)
 			@actor = Actor.find_by("lower(name) = ?", input.downcase)
+			puts "*********************************************"
+			puts "#{@actor.name} starred in::\n#{film_template(@actor.films)}"
 		elsif Actor.find_by("lower(name) = ?", input.downcase) == nil
 			puts "We couldn't find anyone with that name."
 			puts "Try again?"
 			actor_info
-		# else 
-		# 	break if input == 'exit'	
+		# else
+		# 	break if input == 'exit'
 		end
-		puts "*********************************************"
-		puts "#{@actor.name} starred in::\n#{film_template(@actor.films)}"
+		# puts "*********************************************"
+		# puts "#{@actor.name} starred in::\n#{film_template(@actor.films)}"
 	end
 
 	def genre_info
@@ -103,12 +107,11 @@ module SearchFunctions
 		film_parser = arg.all.map do |film|
 			film.title
 		end
-		#fixe these up, sometimes there are less than 3 films
 		template_helper(film_parser)
 	end
 
 	def template_helper(listing)
-		if listing.count > 3
+		if listing.count >= 3
 			listing[-1] = "and " + listing[-1]
 			listing.join(", \n")
 		elsif listing.count == 2
@@ -123,18 +126,14 @@ module SearchFunctions
 			actor.name
 		end
 		#fixe these up, sometimes there are less than 3 actors
-		actor_parser[-1] = "and " + actor_parser[-1]
-		actor_parser.join(", ")
-
+		template_helper(actor_parser)
 	end
 
 	def genre_template(arg)
 		genre_parser = arg.genres.map do |genre|
 			genre.name
 		end
-		#look at actors.
-		genre_parser[-1] = "and " + genre_parser[-1]
-		genre_parser.join(", ")
+		template_helper(genre_parser)
 	end
 
 

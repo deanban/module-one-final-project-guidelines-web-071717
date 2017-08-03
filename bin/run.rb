@@ -1,5 +1,5 @@
 require_relative '../config/environment'
-ActiveRecord::Base.logger = nil 
+ActiveRecord::Base.logger = nil
 
 class MovieSearcher
 	include SearchFunctions
@@ -10,11 +10,11 @@ class MovieSearcher
 		puts "
 ██╗███╗   ███╗██████╗ ██████╗      ██████╗██╗      ██████╗ ███╗   ██╗███████╗
 ██║████╗ ████║██╔══██╗██╔══██╗    ██╔════╝██║     ██╔═══██╗████╗  ██║██╔════╝
-██║██╔████╔██║██║  ██║██████╔╝    ██║     ██║     ██║   ██║██╔██╗ ██║█████╗  
-██║██║╚██╔╝██║██║  ██║██╔══██╗    ██║     ██║     ██║   ██║██║╚██╗██║██╔══╝  
+██║██╔████╔██║██║  ██║██████╔╝    ██║     ██║     ██║   ██║██╔██╗ ██║█████╗
+██║██║╚██╔╝██║██║  ██║██╔══██╗    ██║     ██║     ██║   ██║██║╚██╗██║██╔══╝
 ██║██║ ╚═╝ ██║██████╔╝██████╔╝    ╚██████╗███████╗╚██████╔╝██║ ╚████║███████╗
 ╚═╝╚═╝     ╚═╝╚═════╝ ╚═════╝      ╚═════╝╚══════╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝
-                                                                             
+
 "
 		puts "WAS IMDB DOWN?"
 		puts "We've got you covered."
@@ -31,8 +31,6 @@ class MovieSearcher
 			#puts "What film do you want to know about?"
 			film_info
 		elsif input.casecmp('actors') == 0
-			puts "*********************************************"
-			puts "Any specific actor you want to know about?"
 			actor_info
 			puts "*********************************************"
 
@@ -42,9 +40,9 @@ class MovieSearcher
 			puts "*********************************************"
 
 			if sub_input.casecmp('Y') == 0
-				film_info 
+				film_info
 			elsif sub_input.casecmp('N') == 0
-				
+
 			end
 		elsif input.casecmp('genre') == 0
 			puts "Got any genre in mind?"
@@ -67,7 +65,7 @@ class MovieSearcher
 				#puts "Movies with a minimum rating of #{}"
 
 		elsif input.casecmp('exit') == 0
-			gtfo 
+			gtfo
 			return 'exit'
 		else
 			puts "Pick an actual option!"
@@ -86,6 +84,7 @@ class MovieSearcher
 
 	def gtfo
 		puts "\nGTFO"
+		#return
 	end
 end
 
