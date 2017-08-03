@@ -45,7 +45,6 @@ class MovieSearcher
 
 			end
 		elsif input.casecmp('genre') == 0
-			puts "Got any genre in mind?"
 			genre_info
 		elsif input.casecmp('year') == 0
 			puts "Do you want to checkout a range of years, or a specific one?"
@@ -66,7 +65,7 @@ class MovieSearcher
 
 		elsif input.casecmp('exit') == 0
 			gtfo
-			return 'exit'
+			#'exit'
 		else
 			puts "Pick an actual option!"
 			input_checker
@@ -76,15 +75,15 @@ class MovieSearcher
 
 	def runner
 		welcome
-		while true
+		until input_checker == 'exit'
 			input_checker
-			break if input_checker == 'exit'
 		end
 	end
 
 	def gtfo
 		puts "\nGTFO"
-		#return
+		return exit 
+
 	end
 end
 

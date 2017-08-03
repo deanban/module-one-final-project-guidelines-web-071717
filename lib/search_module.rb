@@ -64,16 +64,24 @@ module SearchFunctions
 	def film_info
 		puts "What film do you want to know about?"
 		input = gets.chomp
-		@film = Film.find_by("lower(title) = ?", input.downcase)
-		puts "*********************************************"
-		puts "#{@film.title} was released in #{@film.year}."
-		puts "*********************************************"
-		puts "Cast includes: \n#{actor_template(@film)}."
-		puts "*********************************************"
-		puts "#{@film.title} is categorized as \n#{genre_template(@film)}"
-		puts "*********************************************"
-		puts "#{@film.title} has a IMDB rating of #{@film.rating}."
-		puts "*********************************************"
+
+		if Film.find_by("lower(title) = ?", input.downcase)
+			@film = Film.find_by("lower(title) = ?", input.downcase)
+			puts "*********************************************"
+			puts "#{@film.title} was released in #{@film.year}."
+			puts "*********************************************"
+			puts "Cast includes: \n#{actor_template(@film)}."
+			puts "*********************************************"
+			puts "#{@film.title} is categorized as \n#{genre_template(@film)}"
+			puts "*********************************************"
+			puts "#{@film.title} has a IMDB rating of #{@film.rating}."
+			puts "*********************************************"
+
+		else
+			puts "We couldn't find movies with that name."
+			puts "Try again?"
+			film_info
+		end
 
 	end
 
@@ -97,6 +105,7 @@ module SearchFunctions
 	end
 
 	def genre_info
+		puts "Got any genre in mind?"
 		input = gets.chomp
 		@genre = Genre.find_by("lower(name) = ?",  input.downcase)
 		puts "There are #{@genre.films.count} films categorized as #{@genre.name} in our Database."
@@ -104,9 +113,13 @@ module SearchFunctions
 		puts "Would you like to see the titles of these movies?(y/n)"
 		input2 = gets.chomp
 		if input2.casecmp('y') == 0
-			film_template(@genre.films)
+			puts "*********************************************"
+
+			puts film_template(@genre.films)
+			puts "*********************************************"
+
 		elsif input2.casecmp('n') == 0
-			return 'exit'
+			puts "¯\\\_(ツ)_/¯"
 		end 	 
 	end
 
