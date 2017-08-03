@@ -32,10 +32,17 @@ module SearchFunctions
 			puts "Enter year"
 			@rating_year = gets.chomp
 			puts "*********************************************"
-			puts "These movies have a minimum rating of #{@rating} in the year #{@rating_year}."
-			list = Film.where("year = #{@rating_year} and rating > #{@rating}")
-			film_template(list)
-			puts "*********************************************"
+			film_count = Film.where("year = #{@rating_year} and rating > #{@rating}").count
+			if film_count == 0
+				puts "No film found with a rating of #{@rating} in the year #{@rating_year}."
+				puts "*********************************************"
+			elsif film_count > 0
+				puts "#{film_count} movies have a minimum IMDB rating of #{@rating} in the year #{@rating_year}."
+				puts "*********************************************"
+				list1 = Film.where("year = #{@rating_year} and rating > #{@rating}")
+				film_template(list1)
+				puts "*********************************************"
+			end
 
 
 		elsif rating_year_pref.casecmp('n') == 0
@@ -43,7 +50,7 @@ module SearchFunctions
 			list = Film.where("rating > #{@rating}")
 			puts "*********************************************"
 
-			puts "All these movies have at least a rating of #{@rating}."
+			puts "All these movies have at least a IMDB rating of #{@rating}."
 			puts film_template(list)
 			puts "*********************************************"
 		end

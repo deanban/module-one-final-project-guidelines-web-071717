@@ -7,9 +7,18 @@ class MovieSearcher
 	attr_accessor :film, :actor, :genre, :rating, :year1, :year2, :rating_year
 
 	def welcome
+		puts "
+██╗███╗   ███╗██████╗ ██████╗      ██████╗██╗      ██████╗ ███╗   ██╗███████╗
+██║████╗ ████║██╔══██╗██╔══██╗    ██╔════╝██║     ██╔═══██╗████╗  ██║██╔════╝
+██║██╔████╔██║██║  ██║██████╔╝    ██║     ██║     ██║   ██║██╔██╗ ██║█████╗  
+██║██║╚██╔╝██║██║  ██║██╔══██╗    ██║     ██║     ██║   ██║██║╚██╗██║██╔══╝  
+██║██║ ╚═╝ ██║██████╔╝██████╔╝    ╚██████╗███████╗╚██████╔╝██║ ╚████║███████╗
+╚═╝╚═╝     ╚═╝╚═════╝ ╚═════╝      ╚═════╝╚══════╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝
+                                                                             
+"
 		puts "WAS IMDB DOWN?"
 		puts "We've got you covered."
-		puts "Not affiliated with the Real IMDB"
+		#puts "Not affiliated with the Real IMDB"
 		puts "What are you interested in?"
 		#puts "If you are interested in 10,000 B.C, get a life!"
 	end
