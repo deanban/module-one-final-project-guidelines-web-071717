@@ -96,8 +96,16 @@ module SearchFunctions
 		input = gets.chomp
 		@genre = Genre.find_by("lower(name) = ?",  input.downcase)
 		puts "There are #{@genre.films.count} films categorized as #{@genre.name} in our Database."
-
+		puts "*********************************************"
+		puts "Would you like to see the titles of these movies?(y/n)"
+		input2 = gets.chomp
+		if input2.casecmp('y') == 0
+			film_template(@genre.films)
+		elsif input2.casecmp('n') == 0
+			return 'exit'
+		end 	 
 	end
+
 
 	def film_template(arg)
 		film_parser = arg.all.map do |film|
