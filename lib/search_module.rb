@@ -31,9 +31,13 @@ module SearchFunctions
 		if rating_year_pref.casecmp('y') == 0
 			puts "Enter year"
 			@rating_year = gets.chomp
+			puts "*********************************************"
 			puts "These movies have a minimum rating of #{@rating} in the year #{@rating_year}."
-			list = Film.where("rating > #{@rating}" AND year: @rating_year)
+			list = Film.where("year = #{@rating_year} and rating > #{@rating}")
 			film_template(list)
+			puts "*********************************************"
+
+
 		elsif rating_year_pref.casecmp('n') == 0
 				
 			list = Film.where("rating > #{@rating}")

@@ -25,6 +25,8 @@ class MovieSearcher
 			puts "*********************************************"
 			puts "Any specific actor you want to know about?"
 			actor_info
+			puts "*********************************************"
+
 			puts "Are you interested in any of #{@actor.name}'s movies?"
 			puts "Y/N?"
 			sub_input = gets.chomp
